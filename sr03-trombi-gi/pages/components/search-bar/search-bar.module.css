@@ -1,0 +1,41 @@
+
+.searchBar > * {
+    display: inline;
+    height: 3rem;
+    vertical-align: middle;
+}
+
+.input {
+    width: calc(100% - 3rem);
+    
+    padding: 0.5rem 0.25rem;
+    padding-left: 1rem;
+    
+    border: none;
+    border-bottom: 0.125rem solid silver;
+
+    font-size: 1.25rem;
+}
+
+.searchBar .input:hover,
+.searchBar .input:focus,
+.searchBar .input:focus-within,
+.searchBar .input:focus-visible {
+    border-bottom-color: var(--clr-blue);
+}
+
+.searchBar .searchIcon {
+    border: none;
+    border-bottom: 0.125rem solid silver;
+    
+    color: silver;
+    font-size: 1.25rem;
+}
+
+.searchBar:hover .searchIcon,
+.searchBar:focus .searchIcon,
+.searchBar:focus-within .searchIcon,
+.searchBar:focus-visible .searchIcon {
+    border-bottom-color: var(--clr-blue);
+    color: var(--clr-blue);
+}

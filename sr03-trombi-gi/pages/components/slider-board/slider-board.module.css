@@ -1,0 +1,31 @@
+.board {
+    --margin-self: 1rem;
+    --margin-element: 0.5rem;
+
+    position: relative;
+    height: calc(80vh - 2 * var(--margin-self));
+    width: 100%;
+
+    padding: 1rem 0.5rem;
+
+    scrollbar-width: none;
+    overflow-x: auto;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    border-radius: 0.75rem;
+    box-shadow: inset rgba(127,127,127,0.3) 3px 2px 5px 3px;
+}
+
+.board > *:not(.open) {
+    min-width: calc(16.6666% - 2 * var(--margin-element)) !important;
+    max-width: calc(16.6666% - 2 * var(--margin-element)) !important;
+    min-height: calc(33.3333% - 2 * var(--margin-element)) !important;
+    max-height: calc(33.3333% - 2 * var(--margin-element)) !important;
+
+    margin: var(--margin-element);
+}

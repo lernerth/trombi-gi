@@ -1,9 +1,18 @@
+html {
+  --clr-blue: rgb(0,158,224);
+  --clr-yellow: rgb(255,217,17);
+  --clr-red: rgb(236,117,46);
+}
+
 html,
 body {
+  height: 100vh;
+  width: 100%;
+
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  
+  font-family: 'DIN Light', sans-serif;
 }
 
 a {
