@@ -3,12 +3,10 @@ import styles from './header.module.css'
 
 type PropsHeader = Readonly<{ children?: React.ReactNode; title?: string;}>
 
-export default class Header extends React.Component {
-    private properties: PropsHeader
-
+export default class Header extends React.Component<PropsHeader> {
     constructor(props: PropsHeader) {
         super(props)
-        this.properties = props
+        this.props = props
     }
 
     refresh = () => {
@@ -18,10 +16,10 @@ export default class Header extends React.Component {
     render = () => {
         return (
             <header className={styles.header}>
-                <h1>{(this.properties.title && this.properties.title) || 'Trombinoscope'}</h1>
+                <h1>{(this.props.title && this.props.title) || 'Trombinoscope'}</h1>
                 <div>
                 {
-                    this.properties.children
+                    this.props.children
                 }
                 </div>
                 <img src="logo_utc.jpg"/>

@@ -17,10 +17,10 @@
     font-size: 1.25rem;
 }
 
-.searchBar .input:hover,
-.searchBar .input:focus,
-.searchBar .input:focus-within,
-.searchBar .input:focus-visible {
+.searchBar:hover .input,
+.searchBar:focus .input,
+.searchBar:focus-within .input,
+.searchBar:focus-visible .input {
     border-bottom-color: var(--clr-blue);
 }
 

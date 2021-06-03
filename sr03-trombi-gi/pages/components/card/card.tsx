@@ -8,7 +8,7 @@ import {
     EnvelopeFill as MailIcon
 } from 'react-bootstrap-icons'
 
-export default interface DataPerson {
+export interface DataPerson {
     mail: string;
     structLibelleFils: string;
     telPoste1: string;
@@ -21,16 +21,16 @@ export default interface DataPerson {
     photo: string;
 }
 
+export type DataSetPerson = Array<DataPerson>
+
 type PropsCard = Readonly<{data: DataPerson;}>
 
-export default class Card extends React.Component {
-    private properties: PropsCard
+export class Card extends React.Component<PropsCard> {
     private isOpen: boolean
     private static mustBeBlocked: boolean = false
 
     constructor(props: PropsCard) {
         super(props)
-        this.properties = props
         this.isOpen = false
     }
 
@@ -70,11 +70,11 @@ export default class Card extends React.Component {
                     (!this.isOpen &&
                     <> {/* Card on the board */}
                     {
-                    (this.properties.data.trimbiDiffuserPhoto$f == "N" &&
+                    (this.props.data.trimbiDiffuserPhoto$f == "N" &&
                     <DefaultIcon className={styles.picture}/>) ||
-                    <img className={styles.picture} src={this.properties.data.photo}/>
+                    <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
                     }
-                    <span className={styles.label}>{this.properties.data.prenomAz} {this.properties.data.nomAz.toUpperCase()}</span>
+                    <span className={styles.label}>{this.props.data.prenomAz} {this.props.data.nomAz.toUpperCase()}</span>
                     </>) ||
                     <> {/* Opened card on the board */}
                     <div className={styles.closeBtn+" "+styles.btn} onClick={this.close}><CloseIcon /></div>
