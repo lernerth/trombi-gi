@@ -16,8 +16,10 @@
 }
 
 .card:hover {
+    z-index: 12;
+
     transition: all 1s ease-out;
-    transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1) perspective(750px) rotateY(15deg);
     box-shadow: rgba(127,127,127,0.5) 3px 2px 5px 3px;
 }
 
