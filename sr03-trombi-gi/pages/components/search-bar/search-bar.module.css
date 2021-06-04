@@ -39,3 +39,17 @@
     border-bottom-color: var(--clr-blue);
     color: var(--clr-blue);
 }
+
+.filterBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    margin-top: 1rem;
+}
+
+.selectBtn {
+    color: white;
+    background-color: var(--clr-red);
+}

@@ -77,9 +77,9 @@ export class Card extends React.Component<PropsCard> {
                     <span className={styles.label}>{this.props.data.prenomAz} {this.props.data.nomAz.toUpperCase()}</span>
                     </>) ||
                     <> {/* Opened card on the board */}
-                    <div className={styles.closeBtn+" "+styles.btn} onClick={this.close}><CloseIcon /></div>
-                    <div className={styles.phoneBtn+" "+styles.btn} onClick={this.openPhone}><PhoneIcon /> Tél.</div>
-                    <div className={styles.mailBtn+" "+styles.btn} onClick={this.mailPhone}><MailIcon /> Mail</div>
+                    <div className={styles.closeBtn+" btn"} onClick={this.close}><CloseIcon /></div>
+                    <div className={styles.phoneBtn+" btn"} onClick={this.openPhone}><PhoneIcon /> Tél.</div>
+                    <div className={styles.mailBtn+" btn"} onClick={this.mailPhone}><MailIcon /> Mail</div>
                     </>
                 }
             </div>

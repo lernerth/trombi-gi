@@ -1,13 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import QRCode from 'qrcode.react'
 import Header from './components/header/header'
 import SearchBar from './components/search-bar/search-bar'
 import SliderBoard from './components/slider-board/slider-board'
 import {Card, DataSetPerson} from './components/card/card'
 
 /*
+import QRCode from 'qrcode.react'
           <QRCode
             id="qrCodeTel"
             value={'tel:0778464320'}

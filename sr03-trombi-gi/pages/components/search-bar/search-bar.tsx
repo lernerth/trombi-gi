@@ -1,8 +1,12 @@
 import React from 'react'
 import { GetStaticPropsContext } from 'next'
 import styles from './search-bar.module.css'
-import { Search, Search as SearchIcon } from 'react-bootstrap-icons'
-import { DataSetPerson } from '../card/card'
+import {
+    Search as SearchIcon,
+    SortUp as SortUpIcon,
+    SortDown as SortDownIcon
+} from 'react-bootstrap-icons'
+import { DataPerson, DataSetPerson } from '../card/card'
 
 const http_user = 'wsuser'
 const http_password = 'v3Kenobi!'
@@ -14,17 +18,25 @@ type propsSearchBar = Readonly<{
     toggleSpin(): void;
 }>
 
+type filterValue = "nomAz" | "fonction" | "structLibelleFils" | "loca"
+
 export default class SearchBar extends React.Component<propsSearchBar> {
     private temp_dataSet: DataSetPerson
+    private last_dataSet: DataSetPerson
+    private filter: filterValue
+    private order: 1 | -1
 
     constructor(props) {
         super(props)
+        this.filter = "nomAz"
+        this.order = 1
         this.temp_dataSet = []
         this.request(root_url+"gi",{}).then(dataSet => {
             /* Traitement de la promesse de requête */
 
             // On prend un tampon pour ne plus avoir à effectuer la requête pour le jeu de données par défaut
             this.temp_dataSet = dataSet
+            this.last_dataSet = dataSet
             // On transmet les données via la methode de rappel 'getDataSet'
             this.props.getDataSet(dataSet)
             // On quitte le mode CHARGEMENT
@@ -70,18 +82,61 @@ export default class SearchBar extends React.Component<propsSearchBar> {
         console.log(searchElement.value)
         this.request(root_url+"gi",{params: {name: searchElement.value}})
             .then(dataSet => {
+                dataSet = this.applyFilter(dataSet)
+                this.last_dataSet = dataSet
                 this.props.getDataSet(dataSet)
                 this.props.toggleSpin() // on oublie pas de sortir du mode CHARGEMENT
             })
         }
     }
 
+    setFilter = (newFilter: filterValue) => {
+        this.props.toggleSpin() // on active le mode CHARGEMENT
+        if(this.filter !== newFilter) {
+            this.filter = newFilter
+            this.order = 1
+        } else {
+            this.order *= -1
+        }
+        this.refresh()
+        this.last_dataSet = this.applyFilter(this.last_dataSet)
+        this.props.getDataSet(this.last_dataSet)
+        this.props.toggleSpin() // on oublie pas de sortir du mode CHARGEMENT
+    }
+
+    applyFilter = (dataSet: DataSetPerson) => {
+        dataSet = dataSet.sort((data1: DataPerson, data2: DataPerson) : number => 
+            data2[this.filter] > data1[this.filter] ? -this.order : this.order
+        )
+        return dataSet
+    }
+
     render = () => {
         return (
+            <>
             <form className={styles.searchBar} onSubmit={this.search}>
                 <SearchIcon className={styles.searchIcon} />
                 <input className={styles.input} type="text" id="search" name="search" placeholder="Rechercher"/>
             </form>
+            <div className={styles.filterBar}>
+                <div className={"btn"+(this.filter === "nomAz" ? " "+styles.selectBtn : "")}
+                     onClick={() => this.setFilter("nomAz")}>{
+                     this.filter === "nomAz" && ((this.order === 1 && <SortUpIcon/>) || (this.order === -1 && <SortDownIcon/>))
+                     }Nom</div>
+                <div className={"btn"+(this.filter === "fonction" ? " "+styles.selectBtn : "")}
+                     onClick={() => this.setFilter("fonction")}>{
+                    this.filter === "fonction" && ((this.order === 1 && <SortUpIcon/>) || (this.order === -1 && <SortDownIcon/>))
+                    }Fonction</div>
+                <div className={"btn"+(this.filter === "structLibelleFils" ? " "+styles.selectBtn : "")}
+                     onClick={() => this.setFilter("structLibelleFils")}>{
+                    this.filter === "structLibelleFils" && ((this.order === 1 && <SortUpIcon/>) || (this.order === -1 && <SortDownIcon/>))
+                    }Structure</div>
+                <div className={"btn"+(this.filter === "loca" ? " "+styles.selectBtn : "")}
+                     onClick={() => this.setFilter("loca")}>{
+                    this.filter === "loca" && ((this.order === 1 && <SortUpIcon/>) || (this.order === -1 && <SortDownIcon/>))
+                    }Bureau</div>
+            </div>
+            </>
         )
     }
 }
