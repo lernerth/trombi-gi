@@ -20,6 +20,7 @@ import QRCode from 'qrcode.react'
 
 export default class Home extends React.Component {
   private dataSet: DataSetPerson
+  private sort: string
   private isLoading: boolean
 
   constructor(props) {
@@ -31,8 +32,9 @@ export default class Home extends React.Component {
     this.setState({})
   }
 
-  getDataSet = (dataSet) => {
+  getDataSet = (dataSet: DataSetPerson, sort: string) => {
     this.dataSet = dataSet
+    this.sort = sort
     this.refresh()
   }
 
@@ -59,7 +61,7 @@ export default class Home extends React.Component {
               this.dataSet !== undefined &&
               Array.isArray(this.dataSet) &&
               this.dataSet.length > 0 &&
-              this.dataSet.map( data => <Card data={data}/>)
+              this.dataSet.map( data => <Card data={data} sort={this.sort}/>)
             }
           </SliderBoard>
         </main>

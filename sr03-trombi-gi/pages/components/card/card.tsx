@@ -18,12 +18,15 @@ export interface DataPerson {
     fonction: string;
     nomAz: string;
     prenomAz: string;
-    photo: string;
+    photo?: string;
 }
 
 export type DataSetPerson = Array<DataPerson>
 
-type PropsCard = Readonly<{data: DataPerson;}>
+type PropsCard = Readonly<{
+    data: DataPerson;
+    sort?: string;
+}>
 
 export class Card extends React.Component<PropsCard> {
     private isOpen: boolean
@@ -70,11 +73,31 @@ export class Card extends React.Component<PropsCard> {
                     (!this.isOpen &&
                     <> {/* Card on the board */}
                     {
-                    (this.props.data.trimbiDiffuserPhoto$f == "N" &&
-                    <DefaultIcon className={styles.picture}/>) ||
+                    (
+                        (
+                            this.props.data.trimbiDiffuserPhoto$f == "N" ||
+                            this.props.data.photo === undefined ||
+                            this.props.data.photo === null
+                        ) &&
+                        <DefaultIcon className={styles.picture}/>
+                    ) ||
                     <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
                     }
-                    <span className={styles.label}>{this.props.data.prenomAz} {this.props.data.nomAz.toUpperCase()}</span>
+                    <span className={styles.label}>
+                        {(this.props.data.prenomAz.length>11 ? this.props.data.prenomAz.substring(0,8)+"..." : this.props.data.prenomAz)+
+                        " "+
+                        (this.props.data.nomAz.length>11 ? this.props.data.nomAz.substring(0,8).toUpperCase()+"..." : this.props.data.nomAz.toUpperCase())}
+                        {
+                            (this.props.sort == "fonction" || this.props.sort == "structLibelleFils" || this.props.sort == "loca") &&
+                            this.props.data[this.props.sort] !== undefined &&
+                            this.props.data[this.props.sort] !== null &&
+                            <span className={styles.sort}>
+                            {
+                                this.props.data[this.props.sort].length>28 ? this.props.data[this.props.sort].substring(0,25)+"..." : this.props.data[this.props.sort]
+                            }
+                            </span>
+                        }
+                        </span>
                     </>) ||
                     <> {/* Opened card on the board */}
                     <div className={styles.closeBtn+" btn"} onClick={this.close}><CloseIcon /></div>
