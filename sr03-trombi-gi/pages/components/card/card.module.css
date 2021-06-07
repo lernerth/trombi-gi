@@ -155,6 +155,16 @@
 }
 
 .openCard .picture {
-    color : white;
+    --margin-y-self: 0.5rem;
+
+    height: calc(80% - 2 * var(--margin-y-self));
+    width: auto;
+
+    margin: var(--margin-y-self);
+
+    color: white;
 }
 
+.openCard .name {
+    color : var(--clr-blue);
+}

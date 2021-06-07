@@ -119,7 +119,7 @@ export class Card extends React.Component<PropsCard> {
                                              src={`data:image/jpg;base64,${this.props.data.photo}`}/>
                                     }
                                 </div>
-                                <div>
+                                <div className={styles.name}>
                                     {this.props.data.nomAz.toUpperCase() + " " + this.props.data.prenomAz}
                                 </div>
                             </div>
