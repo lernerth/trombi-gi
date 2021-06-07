@@ -104,26 +104,34 @@ export class Card extends React.Component<PropsCard> {
                         <div className={styles.closeBtn + " btn"} onClick={this.close}><CloseIcon/></div>
 
                         <div className={styles.topCard}>
-                            <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
-                            {this.props.data.prenomAz + " " + this.props.data.nomAz.toUpperCase()}
-                            <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.</div>
-                            <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail</div>
-
+                            <div>
+                                
+                                <div>
+                                    {this.props.data.nomAz.toUpperCase() + " " + this.props.data.prenomAz}
+                                </div>
+                            </div>
+                            <div>
+                                <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
+                                </div>
+                                <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail</div>
+                            </div>
                         </div>
 
-
                         <div className={styles.line}>
-
                         </div>
 
                         <div className={styles.bottomCard}>
-                            {this.props.data.fonction}
+                            <div>
+                                <div>{this.props.data.fonction}</div>
 
-
-                            {this.props.data.loca}
-                            {this.props.data.mail}
-                            {this.props.data.telPoste1}
+                            </div>
+                            <div>
+                                <div>{this.props.data.loca}</div>
+                                <div>{this.props.data.mail}</div>
+                                <div>{this.props.data.telPoste1}</div>
+                            </div>
                         </div>
+
 
                     </>
                 }

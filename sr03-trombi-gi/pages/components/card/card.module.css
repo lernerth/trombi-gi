@@ -105,10 +105,12 @@
 }
 
 .openCard .phoneBtn {
+    margin: 5%;
     background-color: var(--clr-blue);
 }
 
 .openCard .mailBtn {
+    margin: 5%;
     background-color: var(--clr-yellow);
 }
 
@@ -120,10 +122,23 @@
 .openCard .topCard {
     height: 50%;
     width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
+    justify-items: center;
     align-items: center;
-    justify-content: center;
+
 }
 
+.openCard .bottomCard {
+    height: 50%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
+    justify-items: center;
+    align-items: center;
+}
 
 .line {
     width:80%;
@@ -131,18 +146,14 @@
     background-color: var(--clr-blue);
 }
 
-.openCard .bottomCard {
-    height: 50%;
-    width: 100%;
-    align-items: center
+.topCard div{
+    display : block;
+}
+
+.bottomCard div{
+    display : block;
 }
 
 
-.openCard .picture {
-    --margin-y-self: 0.5rem;
-    height: calc(80% - 2 * var(--margin-y-self));
-    width: auto;
-    margin: var(--margin-y-self);
-    color: white;
-}
+
 
