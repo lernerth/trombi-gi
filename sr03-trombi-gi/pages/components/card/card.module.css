@@ -116,3 +116,33 @@
     box-shadow: inset rgba(127,127,127,0.3) 1px 1px 1px 1px,
                 rgba(255,255,255,0.3) 1px 1px 1px 1px;
 }
+
+.openCard .topCard {
+    height: 50%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.line {
+    width:80%;
+    height:2px;
+    background-color: var(--clr-blue);
+}
+
+.openCard .bottomCard {
+    height: 50%;
+    width: 100%;
+    align-items: center
+}
+
+
+.openCard .picture {
+    --margin-y-self: 0.5rem;
+    height: calc(80% - 2 * var(--margin-y-self));
+    width: auto;
+    margin: var(--margin-y-self);
+    color: white;
+}
+

@@ -42,7 +42,7 @@ export class Card extends React.Component<PropsCard> {
     }
 
     open = () => {
-        if(!Card.mustBeBlocked) {
+        if (!Card.mustBeBlocked) {
             this.isOpen = true
             Card.mustBeBlocked = true
             this.refresh()
@@ -50,7 +50,7 @@ export class Card extends React.Component<PropsCard> {
     }
 
     close = () => {
-        if(this.isOpen) {
+        if (this.isOpen) {
             this.isOpen = false
             Card.mustBeBlocked = false
             this.refresh()
@@ -68,41 +68,63 @@ export class Card extends React.Component<PropsCard> {
     // TODO la partie "open card" n'est pas encore réalisée
     render = () => {
         return (
-            <div className={this.isOpen ? styles.openCard+" "+stylesBoard.open : styles.card} onClick={this.isOpen ? null : this.open}>
+            <div className={this.isOpen ? styles.openCard + " " + stylesBoard.open : styles.card}
+                 onClick={this.isOpen ? null : this.open}>
                 {
                     (!this.isOpen &&
-                    <> {/* Card on the board */}
-                    {
-                    (
-                        (
-                            this.props.data.trimbiDiffuserPhoto$f == "N" ||
-                            this.props.data.photo === undefined ||
-                            this.props.data.photo === null
-                        ) &&
-                        <DefaultIcon className={styles.picture}/>
-                    ) ||
-                    <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
-                    }
-                    <span className={styles.label}>
-                        {(this.props.data.prenomAz.length>11 ? this.props.data.prenomAz.substring(0,8)+"..." : this.props.data.prenomAz)+
-                        " "+
-                        (this.props.data.nomAz.length>11 ? this.props.data.nomAz.substring(0,8).toUpperCase()+"..." : this.props.data.nomAz.toUpperCase())}
-                        {
-                            (this.props.sort == "fonction" || this.props.sort == "structLibelleFils" || this.props.sort == "loca") &&
-                            this.props.data[this.props.sort] !== undefined &&
-                            this.props.data[this.props.sort] !== null &&
-                            <span className={styles.sort}>
+                        <> {/* Card on the board */}
                             {
-                                this.props.data[this.props.sort].length>28 ? this.props.data[this.props.sort].substring(0,25)+"..." : this.props.data[this.props.sort]
+                                (
+                                    (
+                                        this.props.data.trimbiDiffuserPhoto$f == "N" ||
+                                        this.props.data.photo === undefined ||
+                                        this.props.data.photo === null
+                                    ) &&
+                                    <DefaultIcon className={styles.picture}/>
+                                ) ||
+                                <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
+                            }
+                            <span className={styles.label}>
+                        {(this.props.data.prenomAz.length > 11 ? this.props.data.prenomAz.substring(0, 8) + "..." : this.props.data.prenomAz) +
+                        " " +
+                        (this.props.data.nomAz.length > 11 ? this.props.data.nomAz.substring(0, 8).toUpperCase() + "..." : this.props.data.nomAz.toUpperCase())}
+                                {
+                                    (this.props.sort == "fonction" || this.props.sort == "structLibelleFils" || this.props.sort == "loca") &&
+                                    this.props.data[this.props.sort] !== undefined &&
+                                    this.props.data[this.props.sort] !== null &&
+                                    <span className={styles.sort}>
+                            {
+                                this.props.data[this.props.sort].length > 28 ? this.props.data[this.props.sort].substring(0, 25) + "..." : this.props.data[this.props.sort]
                             }
                             </span>
-                        }
+                                }
                         </span>
-                    </>) ||
+                        </>) ||
                     <> {/* Opened card on the board */}
-                    <div className={styles.closeBtn+" btn"} onClick={this.close}><CloseIcon /></div>
-                    <div className={styles.phoneBtn+" btn"} onClick={this.openPhone}><PhoneIcon /> Tél.</div>
-                    <div className={styles.mailBtn+" btn"} onClick={this.mailPhone}><MailIcon /> Mail</div>
+                        <div className={styles.closeBtn + " btn"} onClick={this.close}><CloseIcon/></div>
+
+                        <div className={styles.topCard}>
+                            <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
+                            {this.props.data.prenomAz + " " + this.props.data.nomAz.toUpperCase()}
+                            <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.</div>
+                            <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail</div>
+
+                        </div>
+
+
+                        <div className={styles.line}>
+
+                        </div>
+
+                        <div className={styles.bottomCard}>
+                            {this.props.data.fonction}
+
+
+                            {this.props.data.loca}
+                            {this.props.data.mail}
+                            {this.props.data.telPoste1}
+                        </div>
+
                     </>
                 }
             </div>

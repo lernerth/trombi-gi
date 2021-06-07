@@ -6,6 +6,7 @@ type PropsHeader = Readonly<{ children?: React.ReactNode; title?: string;}>
 export default class Header extends React.Component<PropsHeader> {
     constructor(props: PropsHeader) {
         super(props)
+        // @ts-ignore
         this.props = props
     }
 
