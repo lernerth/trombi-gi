@@ -140,20 +140,21 @@
     align-items: center;
 }
 
-.line {
+.openCard .line {
     width:80%;
     height:2px;
     background-color: var(--clr-blue);
 }
 
-.topCard div{
+.openCard .topCard div{
     display : block;
 }
 
-.bottomCard div{
+.openCard .bottomCard div{
     display : block;
 }
 
-
-
+.openCard .picture {
+    color : white;
+}
 

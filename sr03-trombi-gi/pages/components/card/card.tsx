@@ -105,7 +105,20 @@ export class Card extends React.Component<PropsCard> {
 
                         <div className={styles.topCard}>
                             <div>
-                                
+                                <div>
+                                    {
+                                        (
+                                            (
+                                                this.props.data.trimbiDiffuserPhoto$f == "N" ||
+                                                this.props.data.photo === undefined ||
+                                                this.props.data.photo === null
+                                            ) &&
+                                            <DefaultIcon className={styles.picture}/>
+                                        ) ||
+                                        <img className={styles.picture}
+                                             src={`data:image/jpg;base64,${this.props.data.photo}`}/>
+                                    }
+                                </div>
                                 <div>
                                     {this.props.data.nomAz.toUpperCase() + " " + this.props.data.prenomAz}
                                 </div>
