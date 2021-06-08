@@ -65,7 +65,6 @@ export class Card extends React.Component<PropsCard> {
         this.refresh()
     }
 
-    // TODO la partie "open card" n'est pas encore réalisée
     render = () => {
         return (
             <div className={this.isOpen ? styles.openCard + " " + stylesBoard.open : styles.card}

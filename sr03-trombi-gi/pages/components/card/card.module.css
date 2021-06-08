@@ -105,12 +105,12 @@
 }
 
 .openCard .phoneBtn {
-    margin: 5%;
+    margin: 10%;
     background-color: var(--clr-blue);
 }
 
 .openCard .mailBtn {
-    margin: 5%;
+    margin: 10%;
     background-color: var(--clr-yellow);
 }
 
@@ -150,20 +150,19 @@
     display : block;
 }
 
+
+
 .openCard .bottomCard div{
     display : block;
 }
 
-.openCard .picture {
-    --margin-y-self: 0.5rem;
-
-    height: calc(80% - 2 * var(--margin-y-self));
-    width: auto;
-
-    margin: var(--margin-y-self);
-
+.openCard .topCard .picture {
+    height: auto;
+    width: 50%;
+    align-self: center;
     color: white;
 }
+
 
 .openCard .name {
     color : var(--clr-blue);
