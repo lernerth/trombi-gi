@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './card.module.css'
 import stylesBoard from '../slider-board/slider-board.module.css'
+import QRCode from 'qrcode.react'
 import { 
     PersonCircle as DefaultIcon,
     XLg as CloseIcon,
@@ -31,10 +32,15 @@ type PropsCard = Readonly<{
 export class Card extends React.Component<PropsCard> {
     private isOpen: boolean
     private static mustBeBlocked: boolean = false
+    private isQrTelOpen: boolean
+    private isQrMailOpen: boolean
 
     constructor(props: PropsCard) {
         super(props)
         this.isOpen = false
+        this.isQrMailOpen = false
+        this.isQrTelOpen = false
+
     }
 
     refresh = () => {
@@ -58,10 +64,22 @@ export class Card extends React.Component<PropsCard> {
     }
 
     openPhone = () => {
+        this.isQrTelOpen = true
         this.refresh()
     }
 
     mailPhone = () => {
+        this.isQrMailOpen = true
+        this.refresh()
+    }
+
+    closeMailPhone = () => {
+        this.isQrMailOpen = false
+        this.refresh()
+    }
+
+    closePhone = () => {
+        this.isQrTelOpen = false
         this.refresh()
     }
 
@@ -104,28 +122,52 @@ export class Card extends React.Component<PropsCard> {
 
                         <div className={styles.topCard}>
                             <div>
-                                <div>
-                                    {
-                                        (
-                                            (
-                                                this.props.data.trimbiDiffuserPhoto$f == "N" ||
-                                                this.props.data.photo === undefined ||
-                                                this.props.data.photo === null
-                                            ) &&
-                                            <DefaultIcon className={styles.picture}/>
-                                        ) ||
-                                        <img className={styles.picture}
-                                             src={`data:image/jpg;base64,${this.props.data.photo}`}/>
-                                    }
-                                </div>
-                                <div className={styles.name}>
-                                    {this.props.data.nomAz.toUpperCase() + " " + this.props.data.prenomAz}
-                                </div>
+                                {
+                                    (!this.isQrMailOpen &&
+                                        <>
+                                            <div>
+                                                {
+                                                    (
+                                                        (
+                                                            this.props.data.trimbiDiffuserPhoto$f == "N" ||
+                                                            this.props.data.photo === undefined ||
+                                                            this.props.data.photo === null
+                                                        ) &&
+                                                        <DefaultIcon className={styles.picture}/>
+                                                    ) ||
+                                                    <img className={styles.picture}
+                                                         src={`data:image/jpg;base64,${this.props.data.photo}`}/>
+                                                }
+                                            </div>
+                                            <div className={styles.name}>
+                                                {this.props.data.nomAz.toUpperCase() + " " + this.props.data.prenomAz}
+                                            </div>
+                                        </>) ||
+                                    <>{/*qr code mail*/}
+                                        <QRCode
+                                            id="qrCodeMail"
+                                            value={'mailto:'+ this.props.data.mail}
+                                        />
+                                    </>
+                                }
+
                             </div>
                             <div>
-                                <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
-                                </div>
-                                <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail</div>
+
+                                {this.isQrTelOpen
+                                    ? <div className={styles.closeBtn + " btn"} onClick={this.closePhone}><CloseIcon/>
+                                    </div>
+                                    :
+                                    <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
+                                    </div>
+                                }
+                                {this.isQrMailOpen
+                                    ?
+                                    <div className={styles.closeBtn + " btn"} onClick={this.closeMailPhone}><CloseIcon/>
+                                    </div>
+                                    : <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail
+                                    </div>
+                                }
                             </div>
                         </div>
 
@@ -133,14 +175,41 @@ export class Card extends React.Component<PropsCard> {
                         </div>
 
                         <div className={styles.bottomCard}>
-                            <div>
-                                <div>{this.props.data.fonction}</div>
+                            {
+                                (!this.isQrTelOpen
+                                    &&
+                                    <> {/*Info*/}
 
-                            </div>
+                                        <div>
+                                            <div>{this.props.data.fonction}</div>
+
+                                        </div>
+
+                                    </>) ||
+                                <>{/*qr code tel1*/}
+                                    <QRCode
+                                        id="qrCodeTel"
+                                        value={'tel:034423' + this.props.data.telPoste1}
+                                    />
+                                </>
+                            }
+
+
                             <div>
                                 <div>{this.props.data.loca}</div>
                                 <div>{this.props.data.mail}</div>
-                                <div>{this.props.data.telPoste1}</div>
+                                {this.props.data.telPoste1 !==null
+                                    ? <div>034423{this.props.data.telPoste1}</div>
+                                    :
+                                    <div>
+                                    </div>
+                                }
+                                {this.props.data.telPoste2 !==null
+                                    ? <div>034423{this.props.data.telPoste2}</div>
+                                    :
+                                    <div>
+                                    </div>
+                                }
                             </div>
                         </div>
 
