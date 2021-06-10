@@ -6,26 +6,16 @@ import SearchBar from './components/search-bar/search-bar'
 import SliderBoard from './components/slider-board/slider-board'
 import {Card, DataSetPerson} from './components/card/card'
 
-/*
-import QRCode from 'qrcode.react'
-          <QRCode
-            id="qrCodeTel"
-            value={'tel:0778464320'}
-          />
-          <QRCode
-            id="qrCodeMail"
-            value={'mailto:jeremy.godde@etu.utc.fr'}
-          />
-*/
-
 export default class Home extends React.Component {
   private dataSet: DataSetPerson
   private sort: string
   private isLoading: boolean
+  private isDark: boolean
 
   constructor(props) {
     super(props)
     this.dataSet = []
+    this.isDark = false
   }
 
   refresh = () => {
@@ -43,6 +33,11 @@ export default class Home extends React.Component {
     this.refresh()
   }
 
+  setDarkness = (active:boolean): void => {
+    this.isDark = active
+    this.refresh()
+  }
+
   render = () => {
     return (
       <div className={styles.container}>
@@ -54,14 +49,14 @@ export default class Home extends React.Component {
 
         <main className={styles.main+(this.isLoading ? " "+styles.loading : "")}>
           <Header title="Trombinoscope du Génie Informatique">
-            <SearchBar getDataSet={this.getDataSet} toggleSpin={this.toggleSpin}/>
+            <SearchBar getDataSet={this.getDataSet} toggleSpin={this.toggleSpin} disabled={this.isDark}/>
           </Header>
-          <SliderBoard>
+          <SliderBoard isDark={this.isDark}>
             {
               this.dataSet !== undefined &&
               Array.isArray(this.dataSet) &&
               this.dataSet.length > 0 &&
-              this.dataSet.map( data => <Card data={data} sort={this.sort}/>)
+              this.dataSet.map( data => <Card data={data} sort={this.sort} setDarkness={this.setDarkness} isDark={this.isDark}/>)
             }
           </SliderBoard>
         </main>

@@ -19,6 +19,7 @@ type sortValue = "nomAz" | "fonction" | "structLibelleFils" | "loca"
 type propsSearchBar = Readonly<{
     getDataSet(dataSet: DataSetPerson, sort?: sortValue): void;
     toggleSpin(): void;
+    disabled: boolean;
 }>
 
 export default class SearchBar extends React.Component<propsSearchBar> {
@@ -68,6 +69,14 @@ export default class SearchBar extends React.Component<propsSearchBar> {
         return await res.json()
     } 
 
+    contains = (property: string, searched: string):boolean => {
+        return (
+            property !== undefined &&
+            property !== null &&
+            property.toLowerCase().indexOf(searched.toLowerCase()) >= 0
+        )
+    }
+
     search = (e: React.FormEvent<HTMLElement>) => {
         /* Lit la valeur retourner par la barre de recherche et effectue le traitement adéquat */
         
@@ -76,14 +85,51 @@ export default class SearchBar extends React.Component<propsSearchBar> {
         const searchElement = document.getElementById("search") as HTMLInputElement
         if (searchElement.value === undefined || searchElement.value === null || searchElement.value.length === 0) {
             /* si la barre est vidée alors on affiche les données par défaut */
+            this.sort = "nomAz"
+            this.order = 1
+            this.refresh()
             this.props.getDataSet(this.temp_dataSet)
         } else {
-            /* si une recherche est effectue par l'utilisateur, on émet la requête correspondante */
-        this.request(root_url+"gi",{params: {name: searchElement.value}})
-            .then(dataSet => {
-                this.applySort(dataSet)
-                this.props.toggleSpin() // on oublie pas de sortir du mode CHARGEMENT
+            /* si une recherche est effectue par l'utilisateur */
+            
+            // On fait passer la page en mode CHARGEMENT
+            this.props.toggleSpin()
+
+            const words = searchElement.value.split(' ')
+            let matchedDataSet: DataSetPerson = []
+
+            this.temp_dataSet.forEach(data => {
+                let found = false
+                words.forEach(word => {
+                    if(!found && word !== undefined && word !== null) {
+                        if(this.contains(data.nomAz, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        } else if(this.contains(data.prenomAz, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        } else if(this.contains(data.nomp, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        } else if(this.contains(data.fonction, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        } else if(this.contains(data.structLibelleFils, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        } else if(this.contains(data.structAbrFils, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        } else if(this.contains(data.loca, word)) {
+                            found = true
+                            matchedDataSet.push(data)
+                        }
+                    }
+                })
             })
+
+            this.applySort(matchedDataSet)
+            this.props.toggleSpin() // on oublie pas de sortir du mode CHARGEMENT
         }
     }
 
@@ -112,7 +158,7 @@ export default class SearchBar extends React.Component<propsSearchBar> {
             <>
             <form className={styles.searchBar} onSubmit={this.search}>
                 <SearchIcon className={styles.searchIcon} />
-                <input className={styles.input} type="text" id="search" name="search" placeholder="Rechercher"/>
+                <input className={styles.input} type="text" id="search" name="search" placeholder="Rechercher" disabled={this.props.disabled}/>
             </form>
             <div className={styles.sortBar}>
                 <div className={"btn"+(this.sort === "nomAz" ? " "+styles.selectBtn : "")}

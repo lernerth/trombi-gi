@@ -21,6 +21,10 @@
     box-shadow: inset rgba(127,127,127,0.3) 3px 2px 5px 3px;
 }
 
+.board.dark {
+    background: linear-gradient(to top, rgba(139, 139, 139, 0.6), rgba(89,89,89,0.6));
+}
+
 .board > *:not(.open) {
     min-width: calc(16.6666% - 2 * var(--margin-element)) !important;
     max-width: calc(16.6666% - 2 * var(--margin-element)) !important;

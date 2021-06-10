@@ -12,6 +12,7 @@ import {
 export interface DataPerson {
     mail: string;
     structLibelleFils: string;
+    structAbrFils: string;
     telPoste1: string;
     telPoste2?: string;
     trimbiDiffuserPhoto$f: string;
@@ -19,6 +20,7 @@ export interface DataPerson {
     fonction: string;
     nomAz: string;
     prenomAz: string;
+    nomp: string;
     photo?: string;
 }
 
@@ -27,6 +29,8 @@ export type DataSetPerson = Array<DataPerson>
 type PropsCard = Readonly<{
     data: DataPerson;
     sort?: string;
+    setDarkness(active:boolean): void;
+    isDark: boolean;
 }>
 
 export class Card extends React.Component<PropsCard> {
@@ -51,6 +55,7 @@ export class Card extends React.Component<PropsCard> {
         if (!Card.mustBeBlocked) {
             this.isOpen = true
             Card.mustBeBlocked = true
+            this.props.setDarkness(true)
             this.refresh()
         }
     }
@@ -61,6 +66,7 @@ export class Card extends React.Component<PropsCard> {
             this.isQrMailOpen = false
             this.isQrTelOpen = false
             Card.mustBeBlocked = false
+            this.props.setDarkness(false)
             this.refresh()
         }
     }
@@ -87,7 +93,7 @@ export class Card extends React.Component<PropsCard> {
 
     render = () => {
         return (
-            <div className={this.isOpen ? styles.openCard + " " + stylesBoard.open : styles.card}
+            <div className={this.isOpen ? styles.openCard + " " + stylesBoard.open : styles.card+(this.props.isDark ? ' '+styles.dark : '')}
                  onClick={this.isOpen ? null : this.open}>
                 {
                     (!this.isOpen &&
@@ -104,9 +110,7 @@ export class Card extends React.Component<PropsCard> {
                                 <img className={styles.picture} src={`data:image/jpg;base64,${this.props.data.photo}`}/>
                             }
                             <span className={styles.label}>
-                        {(this.props.data.prenomAz.length > 11 ? this.props.data.prenomAz.substring(0, 8) + "..." : this.props.data.prenomAz) +
-                        " " +
-                        (this.props.data.nomAz.length > 11 ? this.props.data.nomAz.substring(0, 8).toUpperCase() + "..." : this.props.data.nomAz.toUpperCase())}
+                        {(this.props.data.nomp.length > 25 ? this.props.data.nomp.substring(0, 22)+'...' : this.props.data.nomp)}
                                 {
                                     (this.props.sort == "fonction" || this.props.sort == "structLibelleFils" || this.props.sort == "loca") &&
                                     this.props.data[this.props.sort] !== undefined &&
@@ -123,26 +127,24 @@ export class Card extends React.Component<PropsCard> {
                         <div className={styles.closeBtn + " btn"} onClick={this.close}><CloseIcon/></div>
 
                         <div className={styles.topCard}>
-                            <div>
+                            <div className={styles.identity+" "+styles.text}>
                                 {
                                     (!this.isQrMailOpen &&
                                         <>
-                                            <div>
-                                                {
+                                            {
+                                                (
                                                     (
-                                                        (
-                                                            this.props.data.trimbiDiffuserPhoto$f == "N" ||
-                                                            this.props.data.photo === undefined ||
-                                                            this.props.data.photo === null
-                                                        ) &&
-                                                        <DefaultIcon className={styles.picture}/>
-                                                    ) ||
-                                                    <img className={styles.picture}
-                                                         src={`data:image/jpg;base64,${this.props.data.photo}`}/>
-                                                }
-                                            </div>
+                                                        this.props.data.trimbiDiffuserPhoto$f == "N" ||
+                                                        this.props.data.photo === undefined ||
+                                                        this.props.data.photo === null
+                                                    ) &&
+                                                    <DefaultIcon className={styles.picture}/>
+                                                ) ||
+                                                <img className={styles.picture}
+                                                        src={`data:image/jpg;base64,${this.props.data.photo}`}/>
+                                            }
                                             <div className={styles.name}>
-                                                {this.props.data.nomAz.toUpperCase() + " " + this.props.data.prenomAz}
+                                                {this.props.data.nomp}
                                             </div>
                                         </>) ||
                                     <>{/*qr code mail*/}
@@ -150,19 +152,20 @@ export class Card extends React.Component<PropsCard> {
                                             id="qrCodeMail"
                                             value={'mailto:'+ this.props.data.mail}
                                         />
+                                        <div className={styles.text}>{this.props.data.mail}</div>
                                     </>
                                 }
 
                             </div>
-                            <div>
+                            <div className={styles.buttons}>
                                 {
                                     (this.props.data.telPoste1!==null &&
                                     <>
                                         {this.isQrTelOpen
-                                            ? <div className={styles.closeBtn + " btn"} onClick={this.closePhone}><CloseIcon/>
+                                            ? <div className={styles.closeBtn + " " + styles.btn + " btn"} onClick={this.closePhone}><CloseIcon/>
                                             </div>
                                             :
-                                            <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
+                                            <div className={styles.phoneBtn + " " + styles.btn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
                                             </div>
                                         }
                                     </>)
@@ -174,18 +177,14 @@ export class Card extends React.Component<PropsCard> {
                                         <>
                                             {this.isQrMailOpen
                                                 ?
-                                                <div className={styles.closeBtn + " btn"} onClick={this.closeMailPhone}><CloseIcon/>
+                                                <div className={styles.closeBtn + " " + styles.btn + " btn"} onClick={this.closeMailPhone}><CloseIcon/>
                                                 </div>
-                                                : <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail
+                                                : <div className={styles.mailBtn + " " + styles.btn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail
                                                 </div>
                                             }
                                         </>)
 
                                 }
-
-
-
-
                             </div>
                         </div>
 
@@ -193,15 +192,19 @@ export class Card extends React.Component<PropsCard> {
                         </div>
 
                         <div className={styles.bottomCard}>
+                            <div className={styles.bottomLeftCard}>
                             {
                                 (!this.isQrTelOpen
                                     &&
                                     <> {/*Info*/}
-
-                                        <div>
-                                            <div>{this.props.data.fonction}</div>
-
-                                        </div>
+                                            {
+                                                this.props.data.fonction !== undefined &&
+                                                this.props.data.fonction !== null &&
+                                                this.props.data.fonction.split(' - ')
+                                                    .map(fonction => 
+                                                        <div className={styles.text}>{fonction}</div>
+                                                    )
+                                            }
 
                                     </>) ||
                                 <>{/*qr code tel1*/}
@@ -209,34 +212,37 @@ export class Card extends React.Component<PropsCard> {
                                         id="qrCodeTel"
                                         value={'tel:034423' + this.props.data.telPoste1}
                                     />
+                                    <div className={styles.text}>{'034423' + this.props.data.telPoste1}</div>
                                 </>
                             }
-
+                            </div>
+                            <div className={styles.bottomRightCard}>
                             {
                                 ((this.isQrTelOpen && this.props.data.telPoste2 !== null)
                                     &&
                                     <> {/*qr code tel2*/}
                                         <QRCode
                                             id="qrCodeTel"
-                                            value={'tel:034423' + this.props.data.telPoste1}
+                                            value={'tel:034423' + this.props.data.telPoste2}
                                         />
-
+                                        <div className={styles.text}>{'034423' + this.props.data.telPoste2}</div>
                                     </>) ||
                                 <>
                                     {/*Info*/}
 
                                     <div>
                                         <div>
-                                            <div>{this.props.data.loca}</div>
-                                            <div>{this.props.data.mail}</div>
+                                            <div className={styles.text}>{this.props.data.loca}</div>
+                                            <div className={styles.text}>{this.props.data.structAbrFils}</div>
+                                            <div className={styles.text}>{this.props.data.mail}</div>
                                             {this.props.data.telPoste1 !==null
-                                                ? <div>034423{this.props.data.telPoste1}</div>
+                                                ? <div className={styles.text}>034423{this.props.data.telPoste1}</div>
                                                 :
                                                 <div>
                                                 </div>
                                             }
                                             {this.props.data.telPoste2 !==null
-                                                ? <div>034423{this.props.data.telPoste2}</div>
+                                                ? <div className={styles.text}>034423{this.props.data.telPoste2}</div>
                                                 :
                                                 <div>
                                                 </div>
@@ -246,10 +252,8 @@ export class Card extends React.Component<PropsCard> {
                                     </div>
                                 </>
                             }
-
+                            </div>
                         </div>
-
-
                     </>
                 }
             </div>

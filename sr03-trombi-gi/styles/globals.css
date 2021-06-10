@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'DIN';
+  src: local('DIN'), url('/sr03-trombi-gi/public/DINLi.ttf') format('truetype');
+}
+
 html {
   --clr-blue: rgb(0,158,224);
   --clr-yellow: rgb(255,217,17);
@@ -12,7 +17,7 @@ body {
   padding: 0;
   margin: 0;
   
-  font-family: 'DIN Light', sans-serif;
+  font-family: 'DIN', 'Times New Roman' sans-serif;
 }
 
 a {

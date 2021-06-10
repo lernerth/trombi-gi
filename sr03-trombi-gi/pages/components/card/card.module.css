@@ -1,3 +1,8 @@
+/*@font-face {
+    font-family: DIN;
+    src: url(/);
+}*/
+
 .card {
     display: flex;
     flex-direction: column;
@@ -15,11 +20,21 @@
     cursor: pointer;
 }
 
-.card:hover {
+.card:nth-child(6n+1):hover,
+.card:nth-child(6n+2):hover,
+.card:nth-child(6n+3):hover {
     z-index: 12;
-
     transition: all 1s ease-out;
-    transform: scale(1.1,1.1) perspective(750px) rotateY(15deg);
+    transform: scale(1.1,1.1) perspective(1000px) rotateY(15deg);
+    box-shadow: rgba(127,127,127,0.5) 3px 2px 5px 3px;
+}
+
+.card:nth-child(6n+4):hover,
+.card:nth-child(6n+5):hover,
+.card:nth-child(6n):hover  {
+    z-index: 12;
+    transition: all 1s ease-out;
+    transform: scale(1.1,1.1) perspective(1000px) rotateY(-15deg);
     box-shadow: rgba(127,127,127,0.5) 3px 2px 5px 3px;
 }
 
@@ -79,6 +94,10 @@
     background-color: var(--clr-blue);
 }
 
+.card.dark {
+    opacity: 0.4;
+}
+
 .openCard {
     position: fixed;
     display: flex;
@@ -91,12 +110,18 @@
     z-index: 20;
     left: 20%;
 
-    background-color: rgb(223, 223, 223);
+    padding: 1.75rem 2.5rem;
 
-    font-size: 125%;
+    background-color: rgb(223, 223, 223);
 
     border-radius: 0.75rem;
     box-shadow: rgba(127,127,127,0.3) 2px 1px 3px 2px;
+}
+
+.openCard .text {
+    font-size: 150%;
+    margin-top: 0.875rem;
+    margin-bottom: 0.875rem;
 }
 
 .openCard .closeBtn {
@@ -122,10 +147,9 @@
 .openCard .topCard {
     height: 50%;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 100%;
-    justify-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
 
 }
@@ -146,22 +170,73 @@
     background-color: var(--clr-blue);
 }
 
-
-
-
+.openCard > .closeBtn {
+    position: absolute;
+    right: 2.5rem;
+    top: 1.75rem;
+}
 
 .openCard .bottomCard div{
     display : block;
 }
 
-.openCard .topCard .picture {
-    height: auto;
+.openCard .bottomCard .bottomLeftCard,
+.openCard .topCard .identity {
+    height: 100%;
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.openCard .topCard .identity .picture {
+    height: 100%;
+    width: auto;
     align-self: center;
     color: white;
 }
 
-
-.openCard .name {
+.openCard .topCard .identity .name {
     color : var(--clr-blue);
+    width: max-content;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+
+.openCard .topCard .buttons {
+    width: 50%;
+    padding: 0 7.5%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media (min-width: 1920) {
+    .openCard .topCard .buttons .btn {
+        width: 8rem;
+        height: 8rem;
+    
+        font-size: 200%;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;    
+    }
+
+    .openCard > .closeBtn {
+        width: 5rem;
+        height: 3.75rem;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    
+        font-size: 125%;
+    }
 }

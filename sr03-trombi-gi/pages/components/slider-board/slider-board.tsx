@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './slider-board.module.css'
 
-export default class SliderBoard extends React.Component {
+type SliderBoardProps = Readonly<{
+    isDark: boolean;
+}>
+
+export default class SliderBoard extends React.Component<SliderBoardProps> {
     constructor(props) {
         super(props)
     }
@@ -12,7 +16,7 @@ export default class SliderBoard extends React.Component {
 
     render = () => {
         return (
-            <div className={styles.board}>
+            <div className={styles.board+(this.props.isDark ? ' '+styles.dark : '')}>
                 {
                     this.props.children
                 }
