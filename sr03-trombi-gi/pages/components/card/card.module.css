@@ -86,10 +86,10 @@
     justify-content: space-between;
     align-items: center;
 
-    width: 80%;
+    width: 60%;
     height: calc(80vh - 2 * var(--margin-self) - 4 * var(--margin-element));
     z-index: 20;
-    left: 10%;
+    left: 20%;
 
     background-color: rgb(223, 223, 223);
 
