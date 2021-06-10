@@ -58,6 +58,8 @@ export class Card extends React.Component<PropsCard> {
     close = () => {
         if (this.isOpen) {
             this.isOpen = false
+            this.isQrMailOpen = false
+            this.isQrTelOpen = false
             Card.mustBeBlocked = false
             this.refresh()
         }
