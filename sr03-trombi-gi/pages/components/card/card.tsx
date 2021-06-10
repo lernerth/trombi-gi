@@ -153,21 +153,37 @@ export class Card extends React.Component<PropsCard> {
 
                             </div>
                             <div>
+                                {
+                                    (this.props.data.telPoste1!==null &&
+                                    <>
+                                        {this.isQrTelOpen
+                                            ? <div className={styles.closeBtn + " btn"} onClick={this.closePhone}><CloseIcon/>
+                                            </div>
+                                            :
+                                            <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
+                                            </div>
+                                        }
+                                    </>)
 
-                                {this.isQrTelOpen
-                                    ? <div className={styles.closeBtn + " btn"} onClick={this.closePhone}><CloseIcon/>
-                                    </div>
-                                    :
-                                    <div className={styles.phoneBtn + " btn"} onClick={this.openPhone}><PhoneIcon/> Tél.
-                                    </div>
                                 }
-                                {this.isQrMailOpen
-                                    ?
-                                    <div className={styles.closeBtn + " btn"} onClick={this.closeMailPhone}><CloseIcon/>
-                                    </div>
-                                    : <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail
-                                    </div>
+
+                                {
+                                    (this.props.data.mail!==null &&
+                                        <>
+                                            {this.isQrMailOpen
+                                                ?
+                                                <div className={styles.closeBtn + " btn"} onClick={this.closeMailPhone}><CloseIcon/>
+                                                </div>
+                                                : <div className={styles.mailBtn + " btn"} onClick={this.mailPhone}><MailIcon/> Mail
+                                                </div>
+                                            }
+                                        </>)
+
                                 }
+
+
+
+
                             </div>
                         </div>
 
@@ -194,23 +210,41 @@ export class Card extends React.Component<PropsCard> {
                                 </>
                             }
 
+                            {
+                                ((this.isQrTelOpen && this.props.data.telPoste2 !== null)
+                                    &&
+                                    <> {/*qr code tel2*/}
+                                        <QRCode
+                                            id="qrCodeTel"
+                                            value={'tel:034423' + this.props.data.telPoste1}
+                                        />
 
-                            <div>
-                                <div>{this.props.data.loca}</div>
-                                <div>{this.props.data.mail}</div>
-                                {this.props.data.telPoste1 !==null
-                                    ? <div>034423{this.props.data.telPoste1}</div>
-                                    :
+                                    </>) ||
+                                <>
+                                    {/*Info*/}
+
                                     <div>
+                                        <div>
+                                            <div>{this.props.data.loca}</div>
+                                            <div>{this.props.data.mail}</div>
+                                            {this.props.data.telPoste1 !==null
+                                                ? <div>034423{this.props.data.telPoste1}</div>
+                                                :
+                                                <div>
+                                                </div>
+                                            }
+                                            {this.props.data.telPoste2 !==null
+                                                ? <div>034423{this.props.data.telPoste2}</div>
+                                                :
+                                                <div>
+                                                </div>
+                                            }
+                                        </div>
+
                                     </div>
-                                }
-                                {this.props.data.telPoste2 !==null
-                                    ? <div>034423{this.props.data.telPoste2}</div>
-                                    :
-                                    <div>
-                                    </div>
-                                }
-                            </div>
+                                </>
+                            }
+
                         </div>
 
 
