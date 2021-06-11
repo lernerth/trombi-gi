@@ -88,7 +88,7 @@ export default class SearchBar extends React.Component<propsSearchBar> {
             this.sort = "nomAz"
             this.order = 1
             this.refresh()
-            this.props.getDataSet(this.temp_dataSet)
+            this.applySort(this.temp_dataSet)
         } else {
             /* si une recherche est effectue par l'utilisateur */
             
