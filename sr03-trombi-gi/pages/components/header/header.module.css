@@ -22,3 +22,8 @@
     color: var(--clr-blue);
     text-align: center;
 }
+
+.header > img {
+    height: 60%;
+    width: auto;
+}

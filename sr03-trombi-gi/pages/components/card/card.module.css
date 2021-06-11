@@ -191,7 +191,7 @@
 }
 
 .openCard .topCard .identity .picture {
-    height: 100%;
+    height: calc(100% - 2.5rem);
     width: auto;
     align-self: center;
     color: white;
@@ -215,7 +215,7 @@
     align-items: center;
 }
 
-@media (min-width: 1920) {
+@media (min-width: 1920px) {
     .openCard .topCard .buttons .btn {
         width: 8rem;
         height: 8rem;
